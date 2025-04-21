@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up - WealthInvest</title>
+  <link rel="stylesheet" href="signup.css" />
+  <style>
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 14px;
+      color: #007bff;
+      user-select: none;
+    }
+    .password-wrapper {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-wrapper">
+    <section class="signup-container">
+      <h2>Create Your WealthInvest Account</h2>
+      <form id="signup-form">
+        <input type="text" id="fullname" placeholder="Full Name" required />
+        <input type="email" id="email" placeholder="Email Address" required />
+
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+          <span class="toggle-password" onclick="toggleVisibility('password')">👁️</span>
+        </div>
+        <div class="strength-meter" id="strength-text"></div>
+        <span id="strength-bar"></span>
+
+        <div class="password-wrapper">
+          <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+          <span class="toggle-password" onclick="toggleVisibility('confirm-password')">👁️</span>
+        </div>
+
+        <button type="submit">Sign Up</button>
+        <div id="error" class="error-message"></div>
+      </form>
+
+      <p class="login-link">
+        Already have an account? <a href="login.html">Login here</a>
+      </p>
+
+      <a href="home.html" class="home-button">← Back to Home</a>
+    </section>
+  </div>
+
+  <!-- ✅ JavaScript -->
+  <script>
+    function toggleVisibility(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    document.getElementById('password').addEventListener('input', function () {
+      const password = this.value;
+      const strength = getPasswordStrength(password);
+      const strengthText = document.getElementById('strength-text');
+      const strengthBar = document.getElementById('strength-bar');
+
+      if (password.length === 0) {
+        strengthText.textContent = '';
+        strengthBar.className = '';
+        strengthBar.style.width = '0';
+        return;
+      }
+
+      strengthText.textContent = 'Strength: ' + strength.label;
+      strengthBar.className = strength.class;
+      strengthBar.style.width = strength.width;
+    });
+
+    function getPasswordStrength(password) {
+      let score = 0;
+      if (password.length >= 8) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[\W]/.test(password)) score++;
+
+      if (score <= 1) {
+        return { label: 'Weak', class: 'strength-weak', width: '33%' };
+      } else if (score === 2 || score === 3) {
+        return { label: 'Medium', class: 'strength-medium', width: '66%' };
+      } else {
+        return { label: 'Strong', class: 'strength-strong', width: '100%' };
+      }
+    }
+
+    document.getElementById('signup-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullname').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const errorDiv = document.getElementById('error');
+
+      errorDiv.textContent = '';
+
+      if (password !== confirmPassword) {
+        errorDiv.textContent = "Passwords do not match. Please try again.";
+        return;
+      }
+
+      localStorage.setItem('userName', fullName);
+      localStorage.setItem('userEmail', email);
+      window.location.href = 'home.html';
+    });
+  </script>
+</body>
+</html>

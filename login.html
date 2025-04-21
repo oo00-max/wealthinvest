@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - WealthInvest</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <h1>WealthInvest</h1>
+      <p>Secure Your Financial Future</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="login-section">
+    <h2>Login to WealthInvest</h2>
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <input type="email" id="login-email" placeholder="Email address" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+
+      <!-- Forgot Password link -->
+      <div class="forgot-password">
+        <a href="forgotpass.html">Forgot Password?</a>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a href="index.html">Sign Up</a></p>
+    </div>
+  </section>
+
+  <script>
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      if (email && password) {
+        localStorage.setItem("loggedInUser", JSON.stringify({ email }));
+        window.location.href = "home.html";
+      }
+    }
+  </script>
+
+</body>
+</html>

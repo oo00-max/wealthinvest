@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Secure Payment - WealthInvest</title>
+  <link rel="stylesheet" href="payment.css" />
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <section id="payment">
+    <h2>Secure Card Payment</h2>
+
+    <p>Amount to Invest: $<span id="investment-amount"></span></p>
+
+    <form id="payment-form">
+      <input type="email" id="email" placeholder="Your email" required />
+
+      <div id="card-element"><!-- Stripe injects card input here --></div>
+
+      <button type="submit" id="submit">Pay Now</button>
+      <div id="error-message"></div>
+    </form>
+  </section>
+
+  <script>
+    const stripe = Stripe('pk_test_YOUR_PUBLIC_KEY'); // Replace with your public key
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+
+    // Get the investment amount from localStorage
+    const investmentAmount = localStorage.getItem('investmentAmount');
+    document.getElementById('investment-amount').textContent = investmentAmount;
+
+    const form = document.getElementById('payment-form');
+    const errorMessage = document.getElementById('error-message');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const { token, error } = await stripe.createToken(card, {
+        name: document.getElementById('email').value
+      });
+
+      if (error) {
+        errorMessage.textContent = error.message;
+      } else {
+        const response = await fetch('/charge-card', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: token.id, email: document.getElementById('email').value, amount: investmentAmount })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          alert('Payment successful!');
+          window.location.href = '/success';
+        } else {
+          errorMessage.textContent = data.message || 'Payment failed';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

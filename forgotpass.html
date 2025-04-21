@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Forgot Password - WealthInvest</title>
+  <link rel="stylesheet" href="forgotpass.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <h1>WealthInvest</h1>
+      <p>Secure Your Financial Future</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="forgot-section">
+    <h2>Forgot Your Password?</h2>
+    <p>Enter your email address below to receive a password reset link.</p>
+
+    <form id="forgot-form">
+      <input type="email" id="reset-email" placeholder="Email address" required />
+      <button type="submit">Send Reset Link</button>
+      <div id="message" class="message"></div>
+    </form>
+
+    <div class="back-to-login">
+      <a href="login.html">← Back to Login</a>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('forgot-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('reset-email').value;
+      const message = document.getElementById('message');
+
+      // Simulated success message
+      message.textContent = "If this email is registered, a reset link has been sent.";
+    });
+  </script>
+
+</body>
+</html>

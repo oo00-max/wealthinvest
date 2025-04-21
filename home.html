@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WealthInvest - Secure Your Future</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>WealthInvest</h1>
+      <p>Secure Your Financial Future</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#plans">Investment Plans</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="welcome-user" style="text-align: center; margin-top: 30px;">
+    <h2 id="display-name"></h2>
+    <p id="display-email"></p>
+  </section>
+
+  <section id="hero">
+    <h2>Your Path to Financial Freedom Starts Here</h2>
+    <p>Earn passive income with our high-yield investment plans. Start now and experience the power of compound interest!</p>
+    <a href="#plans" class="button">Get Started Now</a>
+  </section>
+
+  <section id="about">
+    <h2>About WealthInvest</h2>
+    <p>At WealthInvest, we are committed to helping you grow your wealth with minimal risk and maximum return.</p>
+  </section>
+
+  <section id="plans">
+    <h2>Our Investment Plans</h2>
+    <div class="plan">
+      <h3>Starter Plan</h3>
+      <p>Deposit: $100 - $500</p>
+      <p>Return: 30% in 7 days</p>
+      <p><button class="invest-now" data-plan="starter" data-min="100" data-max="500">Start Investing</button></p>
+    </div>
+    <div class="plan">
+      <h3>Advanced Plan</h3>
+      <p>Deposit: $500 - $1000</p>
+      <p>Return: 50% in 10 days</p>
+      <p><button class="invest-now" data-plan="advanced" data-min="500" data-max="1000">Start Investing</button></p>
+    </div>
+    <div class="plan">
+      <h3>Elite Plan</h3>
+      <p>Deposit: $1000+</p>
+      <p>Return: 100% in 15 days</p>
+      <p><button class="invest-now" data-plan="elite" data-min="1000" data-max="Infinity">Start Investing</button></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2024 WealthInvest. All rights reserved. | <a href="contact.html">Contact Us</a></p>
+  </footer>
+
+  <script>
+    // Display user info if available in localStorage
+    const name = localStorage.getItem('userName');
+    const email = localStorage.getItem('userEmail');
+
+    if (name && email) {
+      document.getElementById('display-name').textContent = `Welcome, ${name}`;
+      document.getElementById('display-email').textContent = email;
+    }
+
+    // Handle "Start Investing" button click
+    const investButtons = document.querySelectorAll('.invest-now');
+    investButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const plan = this.dataset.plan;
+        const minAmount = parseInt(this.dataset.min);
+        const maxAmount = this.dataset.max === "Infinity" ? Infinity : parseInt(this.dataset.max);
+
+        const amount = prompt(`Enter the amount you wish to invest for the ${plan} plan. Minimum: $${minAmount}, Maximum: $${maxAmount}`);
+        
+        if (amount) {
+          const investmentAmount = parseInt(amount);
+          
+          if (investmentAmount >= minAmount && investmentAmount <= maxAmount) {
+            // Save the investment amount in localStorage
+            localStorage.setItem('investmentAmount', investmentAmount);
+
+            // Redirect to payment page with the amount
+            window.location.href = `payment.html?amount=${investmentAmount}`;
+          } else {
+            alert(`Please enter an amount between $${minAmount} and $${maxAmount}.`);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

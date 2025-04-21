@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us - WealthInvest</title>
+  <link rel="stylesheet" href="contact.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <h1>WealthInvest</h1>
+      <p>Secure Your Financial Future</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#plans">Investment Plans</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or need further information, feel free to reach out. Our team is here to help you.</p>
+    
+    <form id="contact-form" action="submit_contact_form.php" method="POST">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your full name" />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required placeholder="Your email address" />
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" required placeholder="Subject of your message" />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="4" required placeholder="Your message..."></textarea>
+
+      <button type="submit" class="button">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2024 WealthInvest. All rights reserved. | <a href="home.html">Home</a> | <a href="about.html">About Us</a></p>
+  </footer>
+
+</body>
+</html>
